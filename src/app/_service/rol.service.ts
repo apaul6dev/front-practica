@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RolService {
 
-  rolCambio = new Subject<Rol>();
+  rolesCambio = new Subject<Rol[]>();
   mensajeCambio = new Subject<string>();
   url = `${HOST}/roles`;
 
@@ -17,6 +17,14 @@ export class RolService {
 
   listar() {
     return this.http.get<Rol[]>(this.url);
+  }
+
+  eliminar(id: number) {
+    return this.http.delete(`${this.url}/${id}`);
+  }
+
+  modificar(rol: Rol) {
+    return this.http.put(this.url, rol);
   }
 
 }

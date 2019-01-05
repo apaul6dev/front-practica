@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RolService } from 'src/app/_service/rol.service';
 import { Rol } from 'src/app/_model/rol';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-rol',
@@ -16,9 +16,20 @@ export class RolComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private rolService: RolService) { }
+  constructor(private rolService: RolService, private dialog: MatDialog,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+
+    this.rolService.rolesCambio.subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+
+    this.rolService.mensajeCambio.subscribe(data => {
+      this.snackBar.open(data, 'Aviso', { duration: 2000 });
+    });
 
     this.rolService.listar().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
@@ -28,10 +39,16 @@ export class RolComponent implements OnInit {
 
   }
 
-
   openDialog(rol?: Rol) {}
 
-  eliminar(rol?: Rol) {}
+  eliminar(rol?: Rol) {
+    this.rolService.eliminar(rol.idRol).subscribe(data => {
+      this.rolService.listar().subscribe(roles => {
+        this.rolService.rolesCambio.next(roles);
+        this.rolService.mensajeCambio.next('Se eliminó');
+      });
+    });
+  }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
