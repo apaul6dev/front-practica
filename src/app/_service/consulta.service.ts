@@ -10,10 +10,9 @@ import { Consulta } from '../_model/consulta';
   providedIn: 'root'
 })
 export class ConsultaService {
+  url = `${HOST}/consultas`;
 
-  url: string = `${HOST}/consultas`;
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   registrar(consultaDTO: ConsultaListaExamen) {
     return this.http.post(this.url, consultaDTO);
@@ -34,7 +33,7 @@ export class ConsultaService {
   }
 
   guardarArchivo(data: File) {
-    let formdata: FormData = new FormData();
+    const formdata: FormData = new FormData();
     formdata.append('file', data);
 
     return this.http.post(`${this.url}/guardarArchivo`, formdata, {
@@ -42,7 +41,7 @@ export class ConsultaService {
     });
   }
 
-  leerArchivo(){
+  leerArchivo() {
     return this.http.get(`${this.url}/leerArchivo/1`, {
       responseType: 'blob'
     });

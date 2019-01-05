@@ -16,6 +16,7 @@ import { PacienteEdicionComponent } from './pages/paciente/paciente-edicion/paci
 import { PacienteComponent } from './pages/paciente/paciente.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { RolComponent } from './pages/rol/rol.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,7 @@ const routes: Routes = [
       { path: 'edicion/:id', component: EspecialidadEdicionComponent }
     ], canActivate: [GuardService]
   },
+  { path: 'rol', component: RolComponent, canActivate: [GuardService] },
   { path: 'medico', component: MedicoComponent, canActivate: [GuardService] },
   { path: 'consulta', component: ConsultaComponent, canActivate: [GuardService] },
   { path: 'consulta-especial', component: EspecialComponent, canActivate: [GuardService] },

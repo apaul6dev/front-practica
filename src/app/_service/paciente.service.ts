@@ -12,19 +12,19 @@ export class PacienteService {
   pacienteCambio = new Subject<Paciente[]>();
   mensajeCambio = new Subject<string>();
 
-  url: string = `${HOST}/pacientes`;
+  url = `${HOST}/pacientes`;
 
   constructor(private http: HttpClient) { }
 
   listar() {
-    let access_token = JSON.parse(sessionStorage.getItem(TOKEN_NAME)).access_token;
+    const access_token = JSON.parse(sessionStorage.getItem(TOKEN_NAME)).access_token;
     return this.http.get<Paciente[]>(this.url, {
       headers: new HttpHeaders().set('Authorization', `bearer ${access_token}`).set('Content-Type', 'application/json')
     });
   }
 
   listarPageable(p: number, s: number) {
-    let access_token = JSON.parse(sessionStorage.getItem(TOKEN_NAME)).access_token;
+    const access_token = JSON.parse(sessionStorage.getItem(TOKEN_NAME)).access_token;
     return this.http.get<Paciente[]>(`${this.url}/pageable?page=${p}&size=${s}`, {
       headers: new HttpHeaders().set('Authorization', `bearer ${access_token}`).set('Content-Type', 'application/json')
     });

@@ -17,18 +17,18 @@ export class GuardService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const helper = new JwtHelperService();
 
-    let rpta = this.loginService.estaLogeado();
+    const rpta = this.loginService.estaLogeado();
 
     if (!rpta) {
       sessionStorage.clear();
       this.router.navigate(['login']);
       return false;
     } else {
-      let token = JSON.parse(sessionStorage.getItem(TOKEN_NAME));
+      const token = JSON.parse(sessionStorage.getItem(TOKEN_NAME));
 
       if (!helper.isTokenExpired(token.access_token)) {
         const decodedToken = helper.decodeToken(token.access_token);
-        let url = state.url; // /plato
+        const url = state.url; // /plato
 
         return this.menuService.listarPorUsuario(decodedToken.user_name).pipe(map((data: Menu[]) => {
           this.menuService.menuCambio.next(data);

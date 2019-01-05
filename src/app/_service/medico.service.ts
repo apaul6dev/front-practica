@@ -12,8 +12,8 @@ export class MedicoService {
   medicosCambio = new Subject<Medico[]>();
   mensajeCambio = new Subject<string>();
   confirmacion = new Subject<boolean>();
-  
-  url: string = `${HOST}/medicos`;
+
+  url = `${HOST}/medicos`;
 
   constructor(private http: HttpClient) { }
 

@@ -9,13 +9,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ExamenService {
-
   examenesCambio = new Subject<Examen[]>();
   mensajeCambio = new Subject<string>();
 
-  url: string = `${HOST}/examenes`;
+  url = `${HOST}/examenes`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   listar() {
     return this.http.get<Examen[]>(this.url);
@@ -37,7 +36,9 @@ export class ExamenService {
     return this.http.delete(`${this.url}/${id}`);
   }
 
-  listarExamenPorConsulta(idConsulta: number){
-    return this.http.get<ConsultaListaExamen[]>(`${HOST}/consultaexamenes/${idConsulta}`);
+  listarExamenPorConsulta(idConsulta: number) {
+    return this.http.get<ConsultaListaExamen[]>(
+      `${HOST}/consultaexamenes/${idConsulta}`
+    );
   }
 }

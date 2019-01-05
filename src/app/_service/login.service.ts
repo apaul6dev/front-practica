@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 })
 export class LoginService {
 
-  url: string = `${HOST}/oauth/token`;
+  url = `${HOST}/oauth/token`;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -16,17 +16,19 @@ export class LoginService {
     const body = `grant_type=password&username=${encodeURIComponent(usuario)}&password=${encodeURIComponent(contrasena)}`;
 
     return this.http.post(this.url, body, {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8').set('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD))
+      headers: new HttpHeaders().set('Content-Type',
+      'application/x-www-form-urlencoded; charset=UTF-8')
+      .set('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD))
     });
   }
 
   estaLogeado() {
-    let token = sessionStorage.getItem(TOKEN_NAME);
+    const token = sessionStorage.getItem(TOKEN_NAME);
     return token != null;
   }
 
   cerrarSesion() {
-    let access_token = JSON.parse(sessionStorage.getItem(TOKEN_NAME)).access_token;
+    const access_token = JSON.parse(sessionStorage.getItem(TOKEN_NAME)).access_token;
     this.http.get(`${HOST}/usuarios/anular/${access_token}`).subscribe(() => {
       sessionStorage.clear();
       this.router.navigate(['login']);
@@ -39,7 +41,7 @@ export class LoginService {
     });
   }
 
-  verificarTokenReset(token: string) {  
+  verificarTokenReset(token: string) {
     return this.http.get<number>(`${HOST}/login/restablecer/verificar/${token}`);
   }
 

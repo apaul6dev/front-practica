@@ -1,0 +1,58 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>Roles</span> <span class="spacer"></span>
+    <button mat-raised-button color="primary">Agregar</button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="example-container mat-elevation-z8">
+  <div class="example-header">
+    <mat-form-field>
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Buscar Rol"
+      />
+    </mat-form-field>
+  </div>
+
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id_rol">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        IDROL
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.idRol }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Nombre
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.nombre }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="descripcion">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Descripción
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.descripcion }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-button color="primary" (click)="openDialog(row)">
+          Actualizar
+        </button>
+        <button mat-button color="accent" (click)="eliminar(row)">
+          Eliminar
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>

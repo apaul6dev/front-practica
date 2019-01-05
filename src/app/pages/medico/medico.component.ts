@@ -46,7 +46,7 @@ export class MedicoComponent implements OnInit {
   }
 
   openDialog(medico?: Medico) {
-    let med = medico != null ? medico : new Medico();
+    const med = medico != null ? medico : new Medico();
     this.dialog.open(DialogoComponent, {
       width: '250px',
       disableClose: false,
@@ -64,7 +64,7 @@ export class MedicoComponent implements OnInit {
     this.medicoService.eliminar(medico.idMedico).subscribe(data => {
       this.medicoService.listar().subscribe(medicos => {
         this.medicoService.medicosCambio.next(medicos);
-        this.medicoService.mensajeCambio.next("Se elimino");
+        this.medicoService.mensajeCambio.next('Se elimino');
       });
     });
   }
