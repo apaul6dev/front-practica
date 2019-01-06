@@ -39,7 +39,7 @@ export class EspecialComponent implements OnInit {
   diagnostico: string;
   tratamiento: string;
   fechaSeleccionada: Date = new Date();
-  maxFecha: Date = new Date()
+  maxFecha: Date = new Date();
 
   mensaje: string;
 
@@ -53,7 +53,7 @@ export class EspecialComponent implements OnInit {
 
   constructor(private builder: FormBuilder, private especialidadService: EspecialidadService, private consultaService: ConsultaService,
     private pacienteService: PacienteService, private medicoService: MedicoService, private examenService: ExamenService,
-    public snackBar: MatSnackBar) {    
+    public snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -78,20 +78,28 @@ export class EspecialComponent implements OnInit {
   filter(val: any) {
     if (val != null && val.idPaciente > 0) {
       return this.pacientes.filter(option =>
-        option.nombres.toLowerCase().includes(val.nombres.toLowerCase()) || option.apellidos.toLowerCase().includes(val.apellidos.toLowerCase()) || option.dni.includes(val.dni));
+        option.nombres.toLowerCase().includes(val.nombres.toLowerCase()) ||
+        option.apellidos.toLowerCase().includes(val.apellidos.toLowerCase()) ||
+        option.dni.includes(val.dni));
     } else {
       return this.pacientes.filter(option =>
-        option.nombres.toLowerCase().includes(val.toLowerCase()) || option.apellidos.toLowerCase().includes(val.toLowerCase()) || option.dni.includes(val));
+        option.nombres.toLowerCase().includes(val.toLowerCase()) ||
+        option.apellidos.toLowerCase().includes(val.toLowerCase()) ||
+        option.dni.includes(val));
     }
   }
 
   filterMedico(val: any) {
     if (val != null && val.idMedico > 0) {
       return this.medicos.filter(option =>
-        option.nombres.toLowerCase().includes(val.nombres.toLowerCase()) || option.apellidos.toLowerCase().includes(val.apellidos.toLowerCase()) || option.cmp.includes(val.cmp));
+        option.nombres.toLowerCase().includes(val.nombres.toLowerCase()) ||
+        option.apellidos.toLowerCase().includes(val.apellidos.toLowerCase()) ||
+        option.cmp.includes(val.cmp));
     } else {
       return this.medicos.filter(option =>
-        option.nombres.toLowerCase().includes(val.toLowerCase()) || option.apellidos.toLowerCase().includes(val.toLowerCase()) || option.cmp.includes(val));
+        option.nombres.toLowerCase().includes(val.toLowerCase()) ||
+        option.apellidos.toLowerCase().includes(val.toLowerCase()) ||
+        option.cmp.includes(val));
     }
   }
 
@@ -112,37 +120,40 @@ export class EspecialComponent implements OnInit {
   listarEspecilidad() {
     this.especialidadService.listar().subscribe(data => {
       this.especialidades = data;
-    })
+    });
   }
 
   listarMedicos() {
     this.medicoService.listar().subscribe(data => {
       this.medicos = data;
-    })
+    });
   }
   listarExamenes() {
     this.examenService.listar().subscribe(data => {
       this.examenes = data;
-    })
+    });
   }
 
-  seleccionarPaciente(e: any){
-    //console.log(e);
+  seleccionarPaciente(e: any) {
+    // console.log(e);
     this.pacienteSeleccionado = e.option.value;
   }
 
-  seleccionarMedico(e : any){
+  seleccionarMedico(e: any) {
     this.medicoSeleccionado = e.option.value;
   }
 
   estadoBotonRegistrar() {
-    return (this.detalleConsulta.length === 0 || this.especialidadSeleccionada === null || this.medicoSeleccionado === null || this.pacienteSeleccionado === null);
+    return (this.detalleConsulta.length === 0 ||
+      this.especialidadSeleccionada === null ||
+      this.medicoSeleccionado === null ||
+      this.pacienteSeleccionado === null);
   }
 
   agregar() {
 
     if (this.diagnostico != null && this.tratamiento != null) {
-      let det = new DetalleConsulta();
+      const det = new DetalleConsulta();
       det.diagnostico = this.diagnostico;
       det.tratamiento = this.tratamiento;
       this.detalleConsulta.push(det);
@@ -150,7 +161,7 @@ export class EspecialComponent implements OnInit {
       this.tratamiento = null;
     } else {
       this.mensaje = `Debe agregar un diagnóstico y tramiento`;
-      this.snackBar.open(this.mensaje, "Aviso", { duration: 2000 });
+      this.snackBar.open(this.mensaje, 'Aviso', { duration: 2000 });
     }
   }
 
@@ -158,7 +169,7 @@ export class EspecialComponent implements OnInit {
     if (this.examenSeleccionado) {
       let cont = 0;
       for (let i = 0; i < this.examenesSeleccionados.length; i++) {
-        let examen = this.examenesSeleccionados[i];
+        const examen = this.examenesSeleccionados[i];
         if (examen.idExamen === this.examenSeleccionado.idExamen) {
           cont++;
           break;
@@ -166,37 +177,35 @@ export class EspecialComponent implements OnInit {
       }
       if (cont > 0) {
         this.mensaje = `El examen se encuentra en la lista`;
-        this.snackBar.open(this.mensaje, "Aviso", { duration: 2000 });
+        this.snackBar.open(this.mensaje, 'Aviso', { duration: 2000 });
       } else {
         this.examenesSeleccionados.push(this.examenSeleccionado);
       }
     } else {
       this.mensaje = `Debe agregar un examen`;
-      this.snackBar.open(this.mensaje, "Aviso", { duration: 2000 });
+      this.snackBar.open(this.mensaje, 'Aviso', { duration: 2000 });
     }
   }
 
   aceptar() {
     this.consulta = new Consulta();
-    this.consulta.especialidad = this.form.value['especialidad']; //this.especialidadSeleccionada;
-    this.consulta.paciente = this.form.value['paciente'];//this.pacienteSeleccionado;
-    this.consulta.medico = this.form.value['medico'];//this.medicoSeleccionado;
+    this.consulta.especialidad = this.form.value['especialidad']; // this.especialidadSeleccionada;
+    this.consulta.paciente = this.form.value['paciente']; // this.pacienteSeleccionado;
+    this.consulta.medico = this.form.value['medico']; // this.medicoSeleccionado;
     this.consulta.detalleConsulta = this.detalleConsulta;
-    var tzoffset = (this.form.value['fecha']).getTimezoneOffset() * 60000;
-    var localISOTime = (new Date(Date.now() - tzoffset)).toISOString()
+    const tzoffset = (this.form.value['fecha']).getTimezoneOffset() * 60000;
+    const localISOTime = (new Date(Date.now() - tzoffset)).toISOString();
     this.consulta.fecha = localISOTime;
 
-    let consultaListaExamen = new ConsultaListaExamen();
+    const consultaListaExamen = new ConsultaListaExamen();
     consultaListaExamen.consulta = this.consulta;
     consultaListaExamen.lstExamen = this.examenesSeleccionados;
 
     console.log(consultaListaExamen);
 
     this.consultaService.registrar(consultaListaExamen).subscribe(data => {
-
-      //console.log(data);
-
-      this.snackBar.open("Se registró", "Aviso", { duration: 2000 });
+      // console.log(data);
+      this.snackBar.open('Se registró', 'Aviso', { duration: 2000 });
 
       setTimeout(() => {
         this.limpiarControles();

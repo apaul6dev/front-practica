@@ -9,13 +9,17 @@ import { MedicoService } from 'src/app/_service/medico.service';
   templateUrl: './dialogo.component.html',
   styleUrls: ['./dialogo.component.css']
 })
-export class DialogoComponent implements OnInit {  
+export class DialogoComponent implements OnInit {
   medico: Medico;
 
-  constructor(private dialogRef: MatDialogRef<DialogoComponent>, @Inject(MAT_DIALOG_DATA) public data: Medico, private medicoService: MedicoService) { }
+  constructor(
+    private dialogRef: MatDialogRef<DialogoComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Medico,
+    private medicoService: MedicoService
+  ) {}
 
   ngOnInit() {
-    //this.medico = this.data;
+    // this.medico = this.data;
     this.medico = new Medico();
     this.medico.idMedico = this.data.idMedico;
     this.medico.nombres = this.data.nombres;
@@ -24,7 +28,7 @@ export class DialogoComponent implements OnInit {
   }
 
   cancelar() {
-    //this.medicoService.confirmacion.next(false);
+    // this.medicoService.confirmacion.next(false);
     this.dialogRef.close();
   }
 
@@ -33,19 +37,18 @@ export class DialogoComponent implements OnInit {
       this.medicoService.modificar(this.medico).subscribe(data => {
         this.medicoService.listar().subscribe(medicos => {
           this.medicoService.medicosCambio.next(medicos);
-          this.medicoService.mensajeCambio.next("Se modifico");
+          this.medicoService.mensajeCambio.next('Se modifico');
         });
       });
     } else {
       this.medicoService.registrar(this.medico).subscribe(data => {
         this.medicoService.listar().subscribe(medicos => {
           this.medicoService.medicosCambio.next(medicos);
-          this.medicoService.mensajeCambio.next("Se registro");
+          this.medicoService.mensajeCambio.next('Se registro');
         });
       });
     }
     this.dialogRef.close();
-    //this.medicoService.confirmacion.next(true);
+    // this.medicoService.confirmacion.next(true);
   }
-
 }

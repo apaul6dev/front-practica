@@ -27,4 +27,8 @@ export class RolService {
     return this.http.put(this.url, rol);
   }
 
+  registrar(rol: Rol) {
+    return this.http.post(this.url, rol);
+  }
+
 }

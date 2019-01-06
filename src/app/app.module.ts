@@ -31,6 +31,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { TokenComponent } from './login/recuperar/token/token.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { RolComponent } from './pages/rol/rol.component';
+import { RegistrarRolComponent } from './pages/rol/registrar-rol/registrar-rol.component';
 
 export function tokenGetter() {
   const tk = JSON.parse(sessionStorage.getItem(TOKEN_NAME));
@@ -59,9 +60,12 @@ export function tokenGetter() {
     LoginComponent,
     RecuperarComponent,
     TokenComponent,
-    RolComponent
+    RolComponent,
+    RegistrarRolComponent
   ],
-  entryComponents: [DialogoComponent, DialogoDetalleComponent],
+  entryComponents: [DialogoComponent, DialogoDetalleComponent,
+    RegistrarRolComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,

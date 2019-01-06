@@ -1,7 +1,7 @@
 <mat-toolbar>
   <mat-toolbar-row>
     <span>Roles</span> <span class="spacer"></span>
-    <button mat-raised-button color="primary">Agregar</button>
+    <button mat-raised-button color="primary" (click)="registrar()">Registrar</button>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -41,7 +41,7 @@
     <ng-container matColumnDef="acciones">
       <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-button color="primary" (click)="openDialog(row)">
+        <button mat-button color="primary" (click)="actualizar(row)">
           Actualizar
         </button>
         <button mat-button color="accent" (click)="eliminar(row)">
@@ -54,5 +54,5 @@
     <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
   </mat-table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[3, 6, 10, 20]"></mat-paginator>
 </div>

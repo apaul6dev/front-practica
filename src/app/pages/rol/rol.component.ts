@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { RolService } from 'src/app/_service/rol.service';
 import { Rol } from 'src/app/_model/rol';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatSnackBar } from '@angular/material';
+import { RegistrarRolComponent } from './registrar-rol/registrar-rol.component';
 
 @Component({
   selector: 'app-rol',
@@ -20,7 +21,6 @@ export class RolComponent implements OnInit {
     private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-
     this.rolService.rolesCambio.subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
@@ -39,7 +39,24 @@ export class RolComponent implements OnInit {
 
   }
 
-  openDialog(rol?: Rol) {}
+  registrar(rol?: Rol) {
+    const r = rol != null ? rol : new Rol();
+    this.dialog.open(RegistrarRolComponent, {
+      width: '250px',
+      disableClose: false,
+      data: r
+    });
+  }
+
+
+  actualizar(rol?: Rol) {
+    const r = rol != null ? rol : new Rol();
+    this.dialog.open(RegistrarRolComponent, {
+      width: '250px',
+      disableClose: false,
+      data: r
+    });
+  }
 
   eliminar(rol?: Rol) {
     this.rolService.eliminar(rol.idRol).subscribe(data => {
