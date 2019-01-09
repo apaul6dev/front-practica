@@ -17,6 +17,7 @@ import { PacienteComponent } from './pages/paciente/paciente.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { RolComponent } from './pages/rol/rol.component';
+import { AsignarRolesMenuComponent } from './pages/asignar-roles-menu/asignar-roles-menu.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,7 @@ const routes: Routes = [
     ], canActivate: [GuardService]
   },
   { path: 'rol', component: RolComponent, canActivate: [GuardService] },
+  { path: 'roles-menu', component: AsignarRolesMenuComponent, canActivate: [GuardService] },
   { path: 'medico', component: MedicoComponent, canActivate: [GuardService] },
   { path: 'consulta', component: ConsultaComponent, canActivate: [GuardService] },
   { path: 'consulta-especial', component: EspecialComponent, canActivate: [GuardService] },

@@ -32,6 +32,7 @@ import { TokenComponent } from './login/recuperar/token/token.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { RolComponent } from './pages/rol/rol.component';
 import { RegistrarRolComponent } from './pages/rol/registrar-rol/registrar-rol.component';
+import { AsignarRolesMenuComponent } from './pages/asignar-roles-menu/asignar-roles-menu.component';
 
 export function tokenGetter() {
   const tk = JSON.parse(sessionStorage.getItem(TOKEN_NAME));
@@ -61,9 +62,12 @@ export function tokenGetter() {
     RecuperarComponent,
     TokenComponent,
     RolComponent,
-    RegistrarRolComponent
+    RegistrarRolComponent,
+    AsignarRolesMenuComponent
   ],
-  entryComponents: [DialogoComponent, DialogoDetalleComponent,
+  entryComponents: [
+    DialogoComponent,
+    DialogoDetalleComponent,
     RegistrarRolComponent
    ],
   imports: [
