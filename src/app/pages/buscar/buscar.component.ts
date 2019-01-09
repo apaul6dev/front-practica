@@ -20,7 +20,7 @@ export class BuscarComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   maxFecha: Date = new Date();
 
-  constructor(private consultaService: ConsultaService, public dialog: MatDialog) {   
+  constructor(private consultaService: ConsultaService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class BuscarComponent implements OnInit {
   }
 
   buscar() {
-    let filtro = new FiltroConsulta(this.form.value['dni'], this.form.value['nombreCompleto'], this.form.value['fechaConsulta']);
+    const filtro = new FiltroConsulta(this.form.value['dni'], this.form.value['nombreCompleto'], this.form.value['fechaConsulta']);
     filtro.nombreCompleto = filtro.nombreCompleto.toLocaleLowerCase();
 
     if (filtro.fechaConsulta) {
@@ -57,13 +57,13 @@ export class BuscarComponent implements OnInit {
       }
 
       if (filtro.nombreCompleto.length === 0) {
-        delete filtro.nombreCompleto
+        delete filtro.nombreCompleto;
       }
 
       console.log(filtro);
 
       this.consultaService.buscar(filtro).subscribe(data => {
-        this.dataSource = new MatTableDataSource(data)
+        this.dataSource = new MatTableDataSource(data);
       });
     }
 
@@ -71,7 +71,7 @@ export class BuscarComponent implements OnInit {
 
   verDetalle(consulta: Consulta) {
     console.log(consulta);
-    this.dialog.open(DialogoDetalleComponent, {      
+    this.dialog.open(DialogoDetalleComponent, {
       data: consulta
     });
   }

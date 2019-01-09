@@ -14,10 +14,11 @@ export class ExamenEdicionComponent implements OnInit {
   id: number;
   examen: Examen;
   form: FormGroup;
-  edicion: boolean = false;
+  edicion = false;
 
 
-  constructor(private examenService: ExamenService, private route: ActivatedRoute, private router: Router) {
+  constructor(private examenService: ExamenService,
+    private route: ActivatedRoute, private router: Router) {
     this.examen = new Examen();
 
     this.form = new FormGroup({
@@ -39,9 +40,9 @@ export class ExamenEdicionComponent implements OnInit {
   initForm() {
     if (this.edicion) {
       this.examenService.listarExamenPorId(this.id).subscribe(data => {
-        let id = data.idExamen;
-        let nombre = data.nombre;
-        let descripcion = data.descripcion
+        const id = data.idExamen;
+        const nombre = data.nombre;
+        const descripcion = data.descripcion;
 
         this.form = new FormGroup({
           'id': new FormControl(id),
@@ -61,14 +62,14 @@ export class ExamenEdicionComponent implements OnInit {
       this.examenService.modificar(this.examen).subscribe(data => {
         this.examenService.listar().subscribe(especialidad => {
           this.examenService.examenesCambio.next(especialidad);
-          this.examenService.mensajeCambio.next("Se modifico");
+          this.examenService.mensajeCambio.next('Se modifico');
         });
       });
     } else {
       this.examenService.registrar(this.examen).subscribe(data => {
         this.examenService.listar().subscribe(especialidad => {
           this.examenService.examenesCambio.next(especialidad);
-          this.examenService.mensajeCambio.next("Se registro");
+          this.examenService.mensajeCambio.next('Se registro');
         });
       });
     }

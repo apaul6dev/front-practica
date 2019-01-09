@@ -49,8 +49,8 @@ export class ExamenComponent implements OnInit {
 
   eliminar(idExamen: number) {
     this.examenService.eliminar(idExamen).subscribe(data => {
-      this.examenService.listar().subscribe(data => {
-        this.examenService.examenesCambio.next(data);
+      this.examenService.listar().subscribe(data2 => {
+        this.examenService.examenesCambio.next(data2);
         this.examenService.mensajeCambio.next('Se eliminó');
       });
     });

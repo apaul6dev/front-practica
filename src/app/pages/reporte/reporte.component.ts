@@ -12,14 +12,14 @@ export class ReporteComponent implements OnInit {
 
   chart: any;
   tipo: string;
-  pdfSrc: string = '';
+  pdfSrc = '';
 
   selectedFiles: FileList;
   currentFileUpload: File;
 
   labelFile: string;
   imagenData: any;
-  imagenEstado: boolean = false; 
+  imagenEstado = false;
 
   constructor(private consultaService: ConsultaService, private sanitization: DomSanitizer) { }
 
@@ -32,16 +32,16 @@ export class ReporteComponent implements OnInit {
     });
   }
 
-  convertir(data: any){
-    let reader = new FileReader();
-    reader.readAsDataURL(data);    
+  convertir(data: any) {
+    const reader = new FileReader();
+    reader.readAsDataURL(data);
     reader.onloadend = () => {
-      let x = reader.result;                
+      const x = reader.result;
       this.setear(x);
-    }
+    };
   }
 
-  setear(x:any){
+  setear(x: any) {
     this.imagenData = this.sanitization.bypassSecurityTrustResourceUrl(x);
   }
 
@@ -49,8 +49,8 @@ export class ReporteComponent implements OnInit {
     this.consultaService.listarResumen().subscribe(data => {
       console.log(data);
 
-      let cantidad = data.map(res => res.cantidad);
-      let fechas = data.map(res => res.fecha);
+      const cantidad = data.map(res => res.cantidad);
+      const fechas = data.map(res => res.fecha);
 
       this.chart = new Chart('canvas', {
         type: this.tipo,
@@ -60,7 +60,7 @@ export class ReporteComponent implements OnInit {
             {
               label: 'Cantidad',
               data: cantidad,
-              borderColor: "#3cba9f",
+              borderColor: '#3cba9f',
               fill: false,
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -100,11 +100,11 @@ export class ReporteComponent implements OnInit {
 
   generarReporte() {
     this.consultaService.generarReporte().subscribe(data => {
-      let reader = new FileReader();
+      const reader = new FileReader();
       reader.onload = (e: any) => {
         console.log(e.target.result);
         this.pdfSrc = e.target.result;
-      }
+      };
       reader.readAsArrayBuffer(data);
     });
   }
@@ -113,7 +113,7 @@ export class ReporteComponent implements OnInit {
     this.consultaService.generarReporte().subscribe(data => {
       const url = window.URL.createObjectURL(data);
       const a = document.createElement('a');
-      a.setAttribute('style', 'display:none;')
+      a.setAttribute('style', 'display:none;');
       document.body.appendChild(a);
       a.href = url;
       a.download = 'archivo.pdf';
@@ -122,27 +122,27 @@ export class ReporteComponent implements OnInit {
     });
   }
 
-  selectFile(e: any){
+  selectFile(e: any) {
     console.log(e.target.files);
     this.labelFile = e.target.files[0].name;
     this.selectedFiles = e.target.files;
   }
 
-  upload(){
+  upload() {
     this.currentFileUpload = this.selectedFiles.item(0);
     console.log(this.currentFileUpload);
 
     this.consultaService.guardarArchivo(this.currentFileUpload).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.selectedFiles = undefined;
     });
   }
 
-  accionImagen(accion: string){
-    if(accion === "M"){
+  accionImagen(accion: string) {
+    if (accion === 'M') {
       this.imagenEstado = true;
-    }else{
+    } else {
       this.imagenEstado = false;
-    }    
-  }  
+    }
+  }
 }
