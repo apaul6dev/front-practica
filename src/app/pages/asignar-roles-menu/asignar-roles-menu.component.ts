@@ -18,6 +18,7 @@ export class AsignarRolesMenuComponent implements OnInit {
   cantidad: number;
   displayedColumns = ['id_menu', 'icono', 'nombre', 'url', 'acciones'];
   dataSource: MatTableDataSource<Menu>;
+  menuSeleccionando;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -29,6 +30,7 @@ export class AsignarRolesMenuComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.menuSeleccionando = new Menu();
     this.menuService.menuCambio.subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
@@ -74,6 +76,6 @@ export class AsignarRolesMenuComponent implements OnInit {
   }
 
   asignarRol(row: any) {
-    console.log(row);
+    this.menuSeleccionando = row;
   }
 }

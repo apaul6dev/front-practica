@@ -1,7 +1,7 @@
 <mat-toolbar>
   <mat-toolbar-row>
     <span>Asignar roles a menus</span> <span class="spacer"></span>
-   <!--  <button mat-raised-button color="primary" (click)="registrar()">Registrar</button> -->
+    <!--  <button mat-raised-button color="primary" (click)="registrar()">Registrar</button> -->
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -53,7 +53,7 @@
         <button mat-button color="primary" (click)="asignarRol(row)">
           Asignar Rol
         </button>
-<!--         <button mat-button color="accent" (click)="eliminar(row)">
+        <!--         <button mat-button color="accent" (click)="eliminar(row)">
           Eliminar
         </button> -->
       </mat-cell>
@@ -62,5 +62,34 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
   </mat-table>
-  <mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 6, 9, 12]" [length]="cantidad" (page)="mostrarMas($event)"></mat-paginator>
+  <mat-paginator
+    [pageSize]="3"
+    [pageSizeOptions]="[3, 6, 9, 12]"
+    [length]="cantidad"
+    (page)="mostrarMas($event)"
+  ></mat-paginator>
+</div>
+
+<div *ngIf="menuSeleccionando.nombre!==undefined">
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <span>Menu: {{ menuSeleccionando.nombre }}</span>
+      <span class="spacer"></span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-list>
+    <h3 mat-subheader>Roles Asignados</h3>
+    <mat-list-item *ngFor="let item of menuSeleccionando.roles">
+      {{ item.nombre }}
+    </mat-list-item>
+  </mat-list>
+
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <span>Asignar Roles</span> <span class="spacer"></span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-list> <h3 mat-subheader>Asignar Roles</h3> </mat-list>
 </div>
