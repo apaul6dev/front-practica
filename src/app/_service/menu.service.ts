@@ -29,4 +29,8 @@ export class MenuService {
       headers: new HttpHeaders().set('Authorization', `bearer ${access_token}`).set('Content-Type', 'application/json')
     });
   }
+
+  menuspages(p: number, s: number) {
+    return this.http.get<Menu[]>(`${this.url}/menus/menuspages?page=${p}&size=${s}`);
+  }
 }

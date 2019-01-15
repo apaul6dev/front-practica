@@ -62,6 +62,5 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
   </mat-table>
-
-  <mat-paginator [pageSizeOptions]="[3, 6, 10, 20]"></mat-paginator>
+  <mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 6, 9, 12]" [length]="cantidad" (page)="mostrarMas($event)"></mat-paginator>
 </div>

@@ -1,17 +1,17 @@
-import { PacienteService } from "./../../_service/paciente.service";
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { Paciente } from "src/app/_model/paciente";
+import { PacienteService } from './../../_service/paciente.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Paciente } from 'src/app/_model/paciente';
 import {
   MatTableDataSource,
   MatPaginator,
   MatSort,
   MatSnackBar
-} from "@angular/material";
+} from '@angular/material';
 
 @Component({
-  selector: "app-paciente",
-  templateUrl: "./paciente.component.html",
-  styleUrls: ["./paciente.component.css"]
+  selector: 'app-paciente',
+  templateUrl: './paciente.component.html',
+  styleUrls: ['./paciente.component.css']
 })
 export class PacienteComponent implements OnInit {
   cantidad: number;
@@ -56,8 +56,8 @@ export class PacienteComponent implements OnInit {
 
   eliminar(idPaciente: number) {
     this.pacienteService.eliminar(idPaciente).subscribe(data => {
-      this.pacienteService.listar().subscribe(data => {
-        this.pacienteService.pacienteCambio.next(data);
+      this.pacienteService.listar().subscribe(data2 => {
+        this.pacienteService.pacienteCambio.next(data2);
         this.pacienteService.mensajeCambio.next('Se eliminó');
       });
     });
