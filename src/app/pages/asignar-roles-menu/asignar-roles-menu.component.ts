@@ -8,6 +8,7 @@ import {
   MatSnackBar
 } from '@angular/material';
 import { Menu } from 'src/app/_model/menu';
+import { Rol } from 'src/app/_model/rol';
 
 @Component({
   selector: 'app-asignar-roles-menu',
@@ -18,8 +19,10 @@ export class AsignarRolesMenuComponent implements OnInit {
   cantidad: number;
   displayedColumns = ['id_menu', 'icono', 'nombre', 'url', 'acciones'];
   dataSource: MatTableDataSource<Menu>;
-  menuSeleccionando;
-
+  menuSeleccionado: Menu;
+  rolesNoAsignados: Rol[];
+  ini = 0;
+  fin = 3;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -30,29 +33,16 @@ export class AsignarRolesMenuComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.menuSeleccionando = new Menu();
-    this.menuService.menuCambio.subscribe(data => {
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.menuSeleccionado = new Menu();
 
     this.menuService.mensajeCambio.subscribe(data => {
       this.snackBar.open(data, 'Aviso', { duration: 2000 });
     });
 
-    /*     this.menuService.listar().subscribe(data => {
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }); */
-
-    this.menuService.menuspages(0, 3).subscribe(data => {
+    this.menuService.menuspages(this.ini, this.fin).subscribe(data => {
       const menus = JSON.parse(JSON.stringify(data)).content;
       this.cantidad = JSON.parse(JSON.stringify(data)).totalElements;
-
       this.dataSource = new MatTableDataSource(menus);
-      // this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
   }
@@ -64,9 +54,13 @@ export class AsignarRolesMenuComponent implements OnInit {
   }
 
   mostrarMas(e: any) {
-    // console.log(e);
-    this.menuService.menuspages(e.pageIndex, e.pageSize).subscribe(data => {
-      // console.log(data);
+    if (e !== -1) {
+      this.ini = e.pageIndex;
+      this.fin = e.pageSize;
+    }
+    console.log('paginado: ');
+    this.menuService.menuspages(this.ini, this.fin).subscribe(data => {
+      console.log(data);
       const menus = JSON.parse(JSON.stringify(data)).content;
       this.cantidad = JSON.parse(JSON.stringify(data)).totalElements;
       this.dataSource = new MatTableDataSource(menus);
@@ -76,6 +70,45 @@ export class AsignarRolesMenuComponent implements OnInit {
   }
 
   asignarRol(row: any) {
-    this.menuSeleccionando = row;
+    this.menuSeleccionado = row;
+    this.buscarRoleNoAsignados(this.menuSeleccionado.idMenu);
+  }
+
+  buscarRoleNoAsignados(idMenu: number) {
+    this.rolService.rolesMenuNoAsinados(idMenu).subscribe(rs => {
+      this.rolesNoAsignados = rs;
+    });
+  }
+
+  asignarRolAMenu(row: any) {
+    this.menuSeleccionado.roles.push(row);
+    this.menuService.actualizar(this.menuSeleccionado).subscribe(rs => {
+      this.mostrarMas(-1);
+      this.asignarRol(this.menuSeleccionado);
+      this.menuService.mensajeCambio.next('Se Actualizó');
+    });
+  }
+
+  eliminarRolAMenu(row: any) {
+    const indice = this.buscarRol(this.menuSeleccionado.roles, row.idRol);
+    if (indice !== -1) {
+      this.menuSeleccionado.roles.splice(indice, 1);
+      // console.log(this.menuSeleccionado);
+      this.menuService.actualizar(this.menuSeleccionado).subscribe(rs => {
+        this.mostrarMas(-1);
+        this.asignarRol(this.menuSeleccionado);
+        this.menuService.mensajeCambio.next('Se eliminó');
+      });
+    }
+  }
+
+  buscarRol(roles: Rol[], id: number) {
+    for (let index = 0; index < roles.length; index++) {
+      const e = roles[index];
+      if (e.idRol === id) {
+        return index;
+      }
+    }
+    return -1;
   }
 }

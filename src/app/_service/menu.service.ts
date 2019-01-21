@@ -30,6 +30,13 @@ export class MenuService {
     });
   }
 
+  actualizar(menu: any) {
+    const access_token = JSON.parse(sessionStorage.getItem(TOKEN_NAME)).access_token;
+    return this.http.post<Menu[]>(`${this.url}/menus`, menu, {
+      headers: new HttpHeaders().set('Authorization', `bearer ${access_token}`).set('Content-Type', 'application/json')
+    });
+  }
+
   menuspages(p: number, s: number) {
     return this.http.get<Menu[]>(`${this.url}/menus/menuspages?page=${p}&size=${s}`);
   }

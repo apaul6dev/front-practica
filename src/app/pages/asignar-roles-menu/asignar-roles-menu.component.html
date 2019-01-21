@@ -70,26 +70,36 @@
   ></mat-paginator>
 </div>
 
-<div *ngIf="menuSeleccionando.nombre!==undefined">
+<div *ngIf="menuSeleccionado.nombre!==undefined">
   <mat-toolbar>
     <mat-toolbar-row>
-      <span>Menu: {{ menuSeleccionando.nombre }}</span>
+      <span>Opcion de Menu: {{ menuSeleccionado.nombre }}</span>
       <span class="spacer"></span>
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <mat-list>
-    <h3 mat-subheader>Roles Asignados</h3>
-    <mat-list-item *ngFor="let item of menuSeleccionando.roles">
-      {{ item.nombre }}
-    </mat-list-item>
-  </mat-list>
+    <mat-list>
+      <h3 mat-subheader>Roles Asignados</h3>
+      <mat-list-item *ngFor="let item of menuSeleccionado.roles">
+          <button mat-button color="primary" (click)="eliminarRolAMenu(item)">
+              Eliminar
+            </button>
+        {{ item.nombre }} :  {{ item.descripcion }}
+      </mat-list-item>
+    </mat-list>
 
   <mat-toolbar>
     <mat-toolbar-row>
-      <span>Asignar Roles</span> <span class="spacer"></span>
+      <span>Aginación de Roles</span> <span class="spacer"></span>
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <mat-list> <h3 mat-subheader>Asignar Roles</h3> </mat-list>
+  <mat-list> <h3 mat-subheader>Asignar Roles</h3>
+    <mat-list-item *ngFor="let item of rolesNoAsignados">
+        <button mat-button color="primary" (click)="asignarRolAMenu(item)">
+            Asignar
+          </button>
+      {{ item.nombre }}  :  {{ item.descripcion }}
+    </mat-list-item>
+  </mat-list>
 </div>
