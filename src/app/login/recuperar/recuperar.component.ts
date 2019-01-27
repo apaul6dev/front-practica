@@ -12,7 +12,7 @@ export class RecuperarComponent implements OnInit {
   email: string;
   mensaje: string;
   error: string;
-  porcentaje: number = 0;
+  porcentaje = 0;
 
   constructor(private loginService: LoginService, public route: ActivatedRoute) { }
 
@@ -23,11 +23,11 @@ export class RecuperarComponent implements OnInit {
     this.porcentaje = 99;
     this.loginService.enviarCorreo(this.email).subscribe(data => {
       if (data === 1) {
-        this.mensaje = "Se enviaron las indicaciones al correo."
-        this.error = null
+        this.mensaje = 'Se enviaron las indicaciones al correo.';
+        this.error = null;
         this.porcentaje = 100;
       } else {
-        this.error = "El usuario ingresado no existe";
+        this.error = 'El usuario ingresado no existe';
         this.porcentaje = 0;
       }
     });

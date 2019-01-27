@@ -50,12 +50,13 @@ export class RolComponent implements OnInit {
 
 
   actualizar(rol?: Rol) {
-    const r = rol != null ? rol : new Rol();
+    this.registrar(rol);
+/*     const r = rol != null ? rol : new Rol();
     this.dialog.open(RegistrarRolComponent, {
       width: '250px',
       disableClose: false,
       data: r
-    });
+    }); */
   }
 
   eliminar(rol?: Rol) {

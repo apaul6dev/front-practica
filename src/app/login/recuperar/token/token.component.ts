@@ -42,11 +42,11 @@ export class TokenComponent implements OnInit {
           }
         });
       }
-    )
+    );
   }
 
   onSubmit() {
-    let clave: string = this.form.value.confirmPassword;
+    const clave: string = this.form.value.confirmPassword;
     this.loginService.restablecer(this.token, clave).subscribe(data => {
       if (data === 1) {
         this.rpta = 1;

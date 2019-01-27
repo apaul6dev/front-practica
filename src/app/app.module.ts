@@ -35,6 +35,7 @@ import { RegistrarRolComponent } from './pages/rol/registrar-rol/registrar-rol.c
 import { AsignarRolesMenuComponent } from './pages/asignar-roles-menu/asignar-roles-menu.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { AsignarMenuUsuariosComponent } from './pages/asignar-menu-usuarios/asignar-menu-usuarios.component';
+import { RegistrarMenuComponent } from './pages/menu/registrar-menu/registrar-menu.component';
 
 export function tokenGetter() {
   const tk = JSON.parse(sessionStorage.getItem(TOKEN_NAME));
@@ -67,12 +68,14 @@ export function tokenGetter() {
     RegistrarRolComponent,
     AsignarRolesMenuComponent,
     MenuComponent,
-    AsignarMenuUsuariosComponent
+    AsignarMenuUsuariosComponent,
+    RegistrarMenuComponent
   ],
   entryComponents: [
     DialogoComponent,
     DialogoDetalleComponent,
-    RegistrarRolComponent
+    RegistrarRolComponent,
+    RegistrarMenuComponent
    ],
   imports: [
     BrowserModule,

@@ -54,18 +54,19 @@ export class AsignarRolesMenuComponent implements OnInit {
   }
 
   mostrarMas(e: any) {
-    if (e !== -1) {
+    // if (e !== -1) {
       this.ini = e.pageIndex;
       this.fin = e.pageSize;
-    }
-    console.log('paginado: ');
+    // }
+    // console.log('paginado: ');
     this.menuService.menuspages(this.ini, this.fin).subscribe(data => {
-      console.log(data);
+      // console.log(data);
       const menus = JSON.parse(JSON.stringify(data)).content;
       this.cantidad = JSON.parse(JSON.stringify(data)).totalElements;
       this.dataSource = new MatTableDataSource(menus);
       // this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.menuSeleccionado = new Menu();
     });
   }
 
@@ -83,7 +84,7 @@ export class AsignarRolesMenuComponent implements OnInit {
   asignarRolAMenu(row: any) {
     this.menuSeleccionado.roles.push(row);
     this.menuService.actualizar(this.menuSeleccionado).subscribe(rs => {
-      this.mostrarMas(-1);
+      // this.mostrarMas(-1);
       this.asignarRol(this.menuSeleccionado);
       this.menuService.mensajeCambio.next('Se Actualizó');
     });
@@ -95,7 +96,7 @@ export class AsignarRolesMenuComponent implements OnInit {
       this.menuSeleccionado.roles.splice(indice, 1);
       // console.log(this.menuSeleccionado);
       this.menuService.actualizar(this.menuSeleccionado).subscribe(rs => {
-        this.mostrarMas(-1);
+        // this.mostrarMas(-1);
         this.asignarRol(this.menuSeleccionado);
         this.menuService.mensajeCambio.next('Se eliminó');
       });

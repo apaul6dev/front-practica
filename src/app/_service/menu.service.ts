@@ -40,4 +40,8 @@ export class MenuService {
   menuspages(p: number, s: number) {
     return this.http.get<Menu[]>(`${this.url}/menus/menuspages?page=${p}&size=${s}`);
   }
+
+  eliminar(id: number) {
+    return this.http.delete(`${this.url}/menus/${id}`);
+  }
 }

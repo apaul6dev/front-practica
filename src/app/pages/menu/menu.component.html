@@ -1,3 +1,70 @@
-<p>
-  menu works!
-</p>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>Menus</span> <span class="spacer"></span>
+    <button mat-raised-button color="primary" (click)="registrar()">Registrar</button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="example-container mat-elevation-z8">
+  <div class="example-header">
+    <mat-form-field>
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Buscar Menu"
+      />
+    </mat-form-field>
+  </div>
+
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id_menu">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        IDMENU
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.idMenu }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="icono">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Ícono
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.icono }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Nombre
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.nombre }} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="url">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Url
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.url }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-button color="primary" (click)="actualizar(row)">
+          Actualizar
+        </button>
+        <button mat-button color="accent" (click)="eliminar(row)">
+          Eliminar
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+  </mat-table>
+
+  <mat-paginator
+  [pageSize]="3"
+  [pageSizeOptions]="[3, 6, 9, 12]"
+  [length]="cantidad"
+  (page)="mostrarMas($event)"></mat-paginator>
+</div>
