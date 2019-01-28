@@ -16,13 +16,15 @@ import { Rol } from 'src/app/_model/rol';
   styleUrls: ['./asignar-roles-menu.component.css']
 })
 export class AsignarRolesMenuComponent implements OnInit {
-  cantidad: number;
-  displayedColumns = ['id_menu', 'icono', 'nombre', 'url', 'acciones'];
-  dataSource: MatTableDataSource<Menu>;
-  menuSeleccionado: Menu;
-  rolesNoAsignados: Rol[];
   ini = 0;
   fin = 3;
+  cantidad: number;
+  menuSeleccionado: Menu;
+  rolesNoAsignados: Rol[];
+
+  displayedColumns = ['id_menu', 'icono', 'nombre', 'url', 'acciones'];
+  dataSource: MatTableDataSource<Menu>;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -84,7 +86,6 @@ export class AsignarRolesMenuComponent implements OnInit {
   asignarRolAMenu(row: any) {
     this.menuSeleccionado.roles.push(row);
     this.menuService.actualizar(this.menuSeleccionado).subscribe(rs => {
-      // this.mostrarMas(-1);
       this.asignarRol(this.menuSeleccionado);
       this.menuService.mensajeCambio.next('Se Actualizó');
     });
@@ -94,9 +95,7 @@ export class AsignarRolesMenuComponent implements OnInit {
     const indice = this.buscarRol(this.menuSeleccionado.roles, row.idRol);
     if (indice !== -1) {
       this.menuSeleccionado.roles.splice(indice, 1);
-      // console.log(this.menuSeleccionado);
       this.menuService.actualizar(this.menuSeleccionado).subscribe(rs => {
-        // this.mostrarMas(-1);
         this.asignarRol(this.menuSeleccionado);
         this.menuService.mensajeCambio.next('Se eliminó');
       });

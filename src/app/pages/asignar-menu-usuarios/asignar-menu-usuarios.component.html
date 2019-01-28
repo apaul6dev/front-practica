@@ -1,3 +1,69 @@
-<p>
-  asignar-menu-usuarios works!
-</p>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>Asignar roles a usuarios</span> <span class="spacer"></span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="example-container mat-elevation-z8">
+  <div class="example-header">
+    <mat-form-field>
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Buscar Usuarios"
+      />
+    </mat-form-field>
+  </div>
+
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id_usuario">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        IDUSUARIO
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.idUsuario }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Nombre
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.username }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="enabled">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Estado
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.enabled }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-button color="primary" (click)="asignarRol(row)">
+          Asignar Rol
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[3, 6, 10, 20]"></mat-paginator>
+</div>
+
+<div *ngIf="usuarioSeleccionado.username !== undefined">
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <span>Usuario: {{ usuarioSeleccionado.username }}</span>
+      <span class="spacer"></span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-list>
+    <h3 mat-subheader>Roles Asignados</h3>
+    <mat-list-item *ngFor="let item of usuarioSeleccionado.roles">
+      {{ item.nombre }} : {{ item.descripcion }}
+    </mat-list-item>
+  </mat-list>
+</div>
