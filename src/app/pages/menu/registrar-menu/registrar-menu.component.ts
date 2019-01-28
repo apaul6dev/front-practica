@@ -27,9 +27,10 @@ export class RegistrarMenuComponent implements OnInit {
     this.menu.nombre = this.data.nombre;
     this.menu.url = this.data.url;
     this.menu.icono = this.data.icono;
-
+    this.menu.roles = this.data.roles;
   }
   operar() {
+
      if ( this.menu.idMenu !== undefined ) {
       this.menuService.actualizar(this.menu).subscribe(data => {
         this.menuService.listar().subscribe(d => {

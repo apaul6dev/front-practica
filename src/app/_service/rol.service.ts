@@ -29,6 +29,10 @@ export class RolService {
     return this.http.get<Rol[]>(`${this.url}/rolesmenunoasinados/${id}`);
   }
 
+  rolesUsuarioNoAsinados(id: number): Observable<Rol[]> {
+    return this.http.get<Rol[]>(`${this.url}/rolesusuarionoasinados/${id}`);
+  }
+
   modificar(rol: Rol) {
     return this.http.put(this.url, rol);
   }

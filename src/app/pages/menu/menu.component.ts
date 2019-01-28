@@ -70,7 +70,11 @@ export class MenuComponent implements OnInit {
   }
 
   actualizar(row: any) {
-    this.registrar(row);
+    this.dialog.open(RegistrarMenuComponent, {
+      width: '250px',
+      disableClose: false,
+      data: row
+    });
   }
 
   eliminar(row: any) {
@@ -87,6 +91,5 @@ export class MenuComponent implements OnInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-
 
 }
