@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Rol } from '../_model/rol';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, } from 'rxjs';
 import { HOST } from '../_shared/var.constant';
 import { HttpClient } from '@angular/common/http';
 import { Usuario } from '../_model/usuario';
@@ -17,5 +16,13 @@ export class UsuarioService {
 
   listar() {
     return this.http.get<Usuario[]>(this.url);
+  }
+
+  usuariopages(p: number, s: number): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.url}/usuariopages?page=${p}&size=${s}`);
+  }
+
+  actualizar(usuario: Usuario) {
+    return this.http.put(this.url, usuario);
   }
 }

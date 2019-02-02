@@ -49,7 +49,12 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
   </mat-table>
-  <mat-paginator [pageSizeOptions]="[3, 6, 10, 20]"></mat-paginator>
+  <mat-paginator
+    [pageSize]="3"
+    [pageSizeOptions]="[3, 6, 9, 12]"
+    [length]="cantidad"
+    (page)="mostrarMas($event)"
+  ></mat-paginator>
 </div>
 
 <div *ngIf="usuarioSeleccionado.username !== undefined">
@@ -66,4 +71,29 @@
       {{ item.nombre }} : {{ item.descripcion }}
     </mat-list-item>
   </mat-list>
+
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <span>Asignar Roles</span>
+      <span class="spacer"></span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+
+
+  <mat-form-field>
+    <mat-select placeholder="Roles" [formControl]="toppings" multiple>
+      <mat-select-trigger>
+        {{toppings.value ? toppings.value[0].nombre : ''}}
+        <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
+          (+{{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
+        </span>
+      </mat-select-trigger>
+      <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping.nombre}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+<br />
+  <button mat-raised-button color="primary" (click)="aceptar()">Aceptar</button>
+<!--   <button mat-raised-button color="accent" (click)="cancelar()">Cancelar</button> -->
+
 </div>
